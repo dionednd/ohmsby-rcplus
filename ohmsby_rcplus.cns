@@ -1,7 +1,7 @@
-; Roman Cancel Plus+ for OHMSBY Style Characters by dionednd v0.0.1
+; Roman Cancel Plus+ for OHMSBY Style Characters by dionednd v0.0.1a
 ; Adds Blue, Yellow, Purple Roman Cancels to OHMSBY Style Characters
 ; normal Roman Cancel & Force Roman Cancel turns into Red Roman Cancel
-; Blue is usable during neutral or idle states. slows the enemy down by 50% for 60 frames, duration stacks up with active BRCs.
+; Blue is usable during neutral or idle states. slows nearby enemies down by 50% for 60 frames, duration stacks up with active BRCs.
 ; Yellow is usable during blockstun. pushes the enemy away. forward + x is just guard reject, not roman cancel.
 ; Purple is usable during the startup or recovery frames of an attack.
 
@@ -111,6 +111,7 @@ trigger1 = animElemVar(numClsn1) = 0
 type = PalFX
 trigger1 = !isHelper
 trigger1 = map(dndRomanCancel_slowf) > 0
+trigger1 = (abs(p2dist x) + abs(p2dist y)) <= 160
 add = 25,25,100
 time = 1
 redirectID = enemynear,ID
@@ -121,8 +122,9 @@ type = Pause
 trigger1 = !isHelper
 trigger1 = map(dndRomanCancel_slowf) > 0
 trigger1 = gametime%2 = 0
+trigger1 = (abs(p2dist x) + abs(p2dist y)) <= 160
 time = 1
-movetime = 1
+movetime = cond(enemynear, map(dndRomanCancel_slowf) > 0, 0,1)
 pausebg = 0
 endcmdbuftime = 1
 
