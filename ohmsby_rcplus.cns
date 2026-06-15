@@ -1,0 +1,951 @@
+; Roman Cancel Plus+ for OHMSBY Style Characters by dionednd v0.0.1
+; Adds Blue, Yellow, Purple Roman Cancels to OHMSBY Style Characters
+; normal Roman Cancel & Force Roman Cancel turns into Red Roman Cancel
+; Blue is usable during neutral or idle states. slows the enemy down by 50% for 60 frames, duration stacks up with active BRCs.
+; Yellow is usable during blockstun. pushes the enemy away. forward + x is just guard reject, not roman cancel.
+; Purple is usable during the startup or recovery frames of an attack.
+
+; Every Roman Cancels cost 1000 meter.
+
+[Statedef -1]
+
+[State -1, Blue Roman Cancel]
+type = ChangeState
+value = 7070
+triggerall = authorname = "OHMSBY" || authorname = "Ichida" || authorname = "Vinnie" || authorname = "Resentone" || authorname = "TornilloOxidado" || authorname = "HakiKing" || authorname = "ZolidSone" || authorname = "JOHMSBY" || authorname = "dionednd" || authorname = "Rouuuu" || authorname = "OWO" || authorname = "RagingRowen"
+triggerall = prevstateno != [7070,7071] || time > 2
+triggerall = !ishelper
+triggerall = !AIlevel
+triggerall = movetype = I
+triggerall = statetype != A
+triggerall = stateno = [0,199]
+triggerall = power >= 1000
+triggerall = command = "x"
+trigger1 = 1
+
+[State -1, Air Blue Roman Cancel]
+type = ChangeState
+value = 7071
+triggerall = authorname = "OHMSBY" || authorname = "Ichida" || authorname = "Vinnie" || authorname = "Resentone" || authorname = "TornilloOxidado" || authorname = "HakiKing" || authorname = "ZolidSone" || authorname = "JOHMSBY" || authorname = "dionednd" || authorname = "Rouuuu" || authorname = "OWO" || authorname = "RagingRowen"
+triggerall = prevstateno != [7070,7071] || time > 2
+triggerall = !ishelper
+triggerall = !AIlevel
+triggerall = movetype = I
+triggerall = statetype = A
+triggerall = stateno = [0,199]
+triggerall = power >= 1000
+triggerall = command = "x"
+trigger1 = 1
+
+[State -1, Yellow Roman Cancel]
+type = ChangeState
+value = 8080
+triggerall = authorname = "OHMSBY" || authorname = "Ichida" || authorname = "Vinnie" || authorname = "Resentone" || authorname = "TornilloOxidado" || authorname = "HakiKing" || authorname = "ZolidSone" || authorname = "JOHMSBY" || authorname = "dionednd" || authorname = "Rouuuu" || authorname = "OWO" || authorname = "RagingRowen"
+triggerall = prevstateno != [8080,8081]
+triggerall = !ishelper
+triggerall = !AIlevel
+trigger1 = StateNo = 150 || StateNo = 152 || StateNo = 151 || StateNo = 153
+triggerall = statetype != A
+triggerall = power >= 1000
+triggerall = !ctrl
+triggerall = command = "x"
+trigger1 = 1
+
+[State -1, Air Yellow Roman Cancel]
+type = ChangeState
+value = 8081
+triggerall = authorname = "OHMSBY" || authorname = "Ichida" || authorname = "Vinnie" || authorname = "Resentone" || authorname = "TornilloOxidado" || authorname = "HakiKing" || authorname = "ZolidSone" || authorname = "JOHMSBY" || authorname = "dionednd" || authorname = "Rouuuu" || authorname = "OWO" || authorname = "RagingRowen"
+triggerall = prevstateno != [8080,8081]
+triggerall = !ishelper
+triggerall = !AIlevel
+trigger1 = StateNo = 150 || StateNo = 152 || StateNo = 151 || StateNo = 153
+triggerall = statetype = A
+triggerall = power >= 1000
+triggerall = !ctrl
+triggerall = command = "x"
+trigger1 = 1
+
+[State -1, Purple Roman Cancel]
+type = ChangeState
+value = 9090
+triggerall = authorname = "OHMSBY" || authorname = "Ichida" || authorname = "Vinnie" || authorname = "Resentone" || authorname = "TornilloOxidado" || authorname = "HakiKing" || authorname = "ZolidSone" || authorname = "JOHMSBY" || authorname = "dionednd" || authorname = "Rouuuu" || authorname = "OWO" || authorname = "RagingRowen"
+triggerall = prevstateno != [9090,9091]
+triggerall = !ishelper
+triggerall = !AIlevel
+triggerall = movetype = I || movetype = A
+triggerall = statetype != A
+triggerall = !ctrl
+triggerall = stateno != [800,899]
+triggerall = stateno != [8000,8050]
+triggerall= stateno != [3900,3999]
+triggerall= stateno != [4000,4999]
+triggerall = power >= 1000
+triggerall = command = "x"
+triggerall = !movecontact
+trigger1 = animElemVar(numClsn1) = 0
+
+[State -1, Air Purple Roman Cancel]
+type = ChangeState
+value = 9091
+triggerall = authorname = "OHMSBY" || authorname = "Ichida" || authorname = "Vinnie" || authorname = "Resentone" || authorname = "TornilloOxidado" || authorname = "HakiKing" || authorname = "ZolidSone" || authorname = "JOHMSBY" || authorname = "dionednd" || authorname = "Rouuuu" || authorname = "OWO" || authorname = "RagingRowen"
+triggerall = prevstateno != [9090,9091]
+triggerall = !ishelper
+triggerall = !AIlevel
+triggerall = prevmovetype = A
+triggerall = statetype = A
+triggerall = !ctrl
+triggerall = stateno != [800,899]
+triggerall = stateno != [8000,8050]
+triggerall= stateno != [3900,3999]
+triggerall= stateno != [4000,4999]
+triggerall = power >= 1000
+triggerall = command = "x"
+triggerall = !movecontact
+trigger1 = animElemVar(numClsn1) = 0
+
+[Statedef +1]
+
+; Slow Mo Code
+
+[State 7070, PalFX]
+type = PalFX
+trigger1 = !isHelper
+trigger1 = map(dndRomanCancel_slowf) > 0
+add = 25,25,100
+time = 1
+redirectID = enemynear,ID
+ignorehitpause = 1
+
+[State +1, Pause]
+type = Pause
+trigger1 = !isHelper
+trigger1 = map(dndRomanCancel_slowf) > 0
+trigger1 = gametime%2 = 0
+time = 1
+movetime = 1
+pausebg = 0
+endcmdbuftime = 1
+
+[State +1, MapSet]
+type = MapAdd
+trigger1 = !isHelper
+trigger1 = map(dndRomanCancel_slowf) > 0
+trigger1 = gametime%2 = 0
+map = "dndRomanCancel_slowf"
+value = -1
+ignorehitpause = 1
+
+[State +1, Effect]
+type = PalFX
+triggerall = authorname = "OHMSBY" || authorname = "Ichida" || authorname = "Vinnie" || authorname = "Resentone" || authorname = "TornilloOxidado" || authorname = "HakiKing" || authorname = "ZolidSone" || authorname = "JOHMSBY" || authorname = "dionednd" || authorname = "Rouuuu" || authorname = "OWO" || authorname = "RagingRowen"
+trigger1 = stateno = [6060,6061]
+trigger1 = time = 1
+time = 5
+add = 100,0,0
+
+[State +1, Effect]
+type = Explod
+triggerall = authorname = "OHMSBY" || authorname = "Ichida" || authorname = "Vinnie" || authorname = "Resentone" || authorname = "TornilloOxidado" || authorname = "HakiKing" || authorname = "ZolidSone" || authorname = "JOHMSBY" || authorname = "dionednd" || authorname = "Rouuuu" || authorname = "OWO" || authorname = "RagingRowen"
+trigger1 = stateno = [6060,6061]
+trigger1 = time = 1
+anim = 6113
+scale = .5,.5
+postype = p1
+pos = 2,-45
+sprpriority = 3
+ownpal = 1
+palfx.time = -1
+palfx.mul = 255,25,0
+removeongethit = 1
+pausemovetime = 99999
+supermovetime = 99999
+ignorehitpause = 1
+persistent = 0
+bindtime = 1
+
+;---------------------------------------------------------------------------
+;Cancel Stand
+[Statedef 7070]
+type    = S
+physics = N  
+ctrl = 0
+
+[State 6060, Effect]
+type = Explod
+trigger1 = time = 0
+anim = 6113
+scale = 1,1
+postype = p1
+pos = 2,-45
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+pausemovetime = 99999
+supermovetime = 99999
+ignorehitpause = 1
+persistent = 0
+bindtime = 1
+
+[State 7070, MapSet]
+type = MapAdd
+trigger1 = !time  
+map = "dndRomanCancel_slowf"
+value = 30
+ 
+[State 7070, PosSet]
+type = PosSet
+trigger1 = !time  
+y = 0
+ignorehitpause = 1
+
+[State 7070]
+type = poweradd
+;triggerall = var(13) = 0
+trigger1 = !time
+trigger1 = prevstateno != 3000
+trigger1 = prevstateno != 3001
+trigger1 = prevstateno != 3050
+trigger1 = prevstateno != 3051
+value = -1000
+ 
+[State 7070]
+type = VelSet
+trigger1 = !time
+x = 0
+y = 0
+ignorehitpause = 1
+
+[State 230, 1]
+type = stopSnd
+trigger1 = Time = 0
+channel = 2
+
+[State 7070, Cancel SFX]
+type = PlaySnd
+trigger1 = !time
+value = 6060, 0
+
+[State 1200, 6]
+type = removeexplod
+trigger1 = time= 0
+id = 6621
+
+[State 7070, Effect]
+type = PalFX
+;triggerall = var(13) = 0
+trigger1 = time = 0
+trigger1 = prevstateno != 3000
+trigger1 = prevstateno != 3001
+trigger1 = prevstateno != 3050
+trigger1 = prevstateno != 3051
+time = 5
+add = 0,0,100
+
+[State 7070, Effect]
+type = null;PalFX
+triggerall = var(13) = 1
+trigger1 = time = 0
+time = 5
+add = 250,0,0
+
+[State 7070, Effect]
+type = Explod
+trigger1 = time = 0
+anim = 6113
+scale = .5,.5
+postype = p1
+pos = 2,-45
+sprpriority = 3
+ownpal = 1
+palfx.time = -1
+palfx.mul = 0,25,255
+removeongethit = 1
+pausemovetime = 99999
+supermovetime = 99999
+ignorehitpause = 1
+persistent = 0
+bindtime = 1
+
+[State 7070]
+type = PosSet
+trigger1 = Time = 1
+y = 0
+ 
+[State 7070, ChangeAnim]
+type = ChangeAnim
+trigger1 = pos y < 0
+value = 0
+ignorehitpause = 1
+
+[State 7070, ChangeAnim]
+type = Changestate
+trigger1 = command = "holdfwd"
+trigger1 = command != "holdup"
+trigger1 = command != "holddown"
+value = 100
+ignorehitpause = 1
+
+[State 7070, ChangeAnim]
+type = Changestate
+trigger1 = command = "holdback"
+trigger1 = command != "holdup"
+trigger1 = command != "holddown"
+value = 105
+ignorehitpause = 1
+
+[State 7070, DestroySelf]
+type = ChangeState
+trigger1 = time >2
+value = 0
+ctrl = 1
+ignorehitpause = 1
+
+;---------------------------------------------------------------------------
+;Cancel air
+[Statedef 7071]
+type    = A
+physics = N  
+ctrl = 0
+
+[State 6060, Effect]
+type = Explod
+trigger1 = stateno = [6060,6061]
+trigger1 = time = 0
+anim = 6113
+scale = .5,.5
+postype = p1
+pos = 2,-45
+sprpriority = 3
+ownpal = 1
+palfx.time = -1
+palfx.mul = 255,25,0
+removeongethit = 1
+pausemovetime = 99999
+supermovetime = 99999
+ignorehitpause = 1
+persistent = 0
+bindtime = 1
+
+[State 7070, PalFX]
+type = PalFX
+trigger1 = 1
+add = 25,25,100
+time = 30
+redirectID = enemynear,ID
+
+[State 7070, MapSet]
+type = MapSet
+trigger1 = !time  
+map = "dndRomanCancel_slowf"
+value = 30
+ 
+[State 7071, PosSet]
+type = null;PosSet
+trigger1 = !time  
+y = 0
+ignorehitpause = 1
+
+[State 7071]
+type = poweradd
+;triggerall = var(13) = 0
+trigger1 = !time
+value = -1000
+ 
+[State 7071]
+type = VelSet
+trigger1 = !time
+x = 0
+y = 0
+ignorehitpause = 1
+
+[State 230, 1]
+type = stopSnd
+trigger1 = Time = 0
+channel = 2
+ 
+[State 7071, Cancel SFX]
+type = PlaySnd
+trigger1 = !time
+value = 6060, 0
+
+[State 1200, 6]
+type = removeexplod
+trigger1 = time= 0
+id = 6621
+
+[State 7071, Effect]
+type = PalFX
+trigger1 = time = 0
+;triggerall = var(13) = 0
+time = 5
+add = 0,0,100
+
+[State 7071, Effect]
+type = Explod
+trigger1 = time = 0
+anim = 6113
+scale = .5,.5
+postype = p1
+pos = 2,-45
+sprpriority = 3
+ownpal = 1
+palfx.time = -1
+palfx.mul = 0,25,255
+removeongethit = 1
+pausemovetime = 99999
+supermovetime = 99999
+ignorehitpause = 1
+persistent = 0
+bindtime = 1
+ 
+[State 6061, ChangeAnim]
+type = ChangeAnim
+trigger1 = Time = 1
+value = 41
+ignorehitpause = 1
+
+[State 6061, ChangeAnim]
+type = Changestate
+trigger1 = command = "holdfwd"
+trigger1 = command != "holdup"
+trigger1 = command != "holddown"
+value = 102
+ignorehitpause = 1
+
+[State 6061, ChangeAnim]
+type = Changestate
+trigger1 = command = "holdback"
+trigger1 = command != "holdup"
+trigger1 = command != "holddown"
+value = 103
+ignorehitpause = 1
+
+[State 6061, ChangeAnim]
+type = Changestate
+trigger1 = command = "holddown"
+value = 53
+ignorehitpause = 1
+
+[State 6061, DestroySelf]
+type = ChangeState
+trigger1 = time >2
+value = 51
+ignorehitpause = 1
+
+;---------------------------------------------------------------------------
+;Cancel Stand
+[Statedef 8080]
+type    = S
+physics = N  
+ctrl = 0
+
+[State 6060, Effect]
+type = Explod
+trigger1 = stateno = [6060,6061]
+trigger1 = time = 0
+anim = 6113
+scale = .5,.5
+postype = p1
+pos = 2,-45
+sprpriority = 3
+ownpal = 1
+palfx.time = -1
+palfx.mul = 255,25,0
+removeongethit = 1
+pausemovetime = 99999
+supermovetime = 99999
+ignorehitpause = 1
+persistent = 0
+bindtime = 1
+
+[State 7070, VelAdd]
+type = VelAdd
+trigger1 = time = 0
+x = cond(enemynear, statetype != A, -25, -12.5)
+redirectID = enemynear, ID
+ 
+[State 7070, PosSet]
+type = PosSet
+trigger1 = !time  
+y = 0
+ignorehitpause = 1
+
+[State 7070]
+type = poweradd
+;triggerall = var(13) = 0
+trigger1 = !time
+trigger1 = prevstateno != 3000
+trigger1 = prevstateno != 3001
+trigger1 = prevstateno != 3050
+trigger1 = prevstateno != 3051
+value = -1000
+ 
+[State 7070]
+type = VelSet
+trigger1 = !time
+x = 0
+y = 0
+ignorehitpause = 1
+
+[State 230, 1]
+type = stopSnd
+trigger1 = Time = 0
+channel = 2
+
+[State 7070, Cancel SFX]
+type = PlaySnd
+trigger1 = !time
+value = 6060, 0
+
+[State 1200, 6]
+type = removeexplod
+trigger1 = time= 0
+id = 6621
+
+[State 7070, Effect]
+type = PalFX
+;triggerall = var(13) = 0
+trigger1 = time = 0
+trigger1 = prevstateno != 3000
+trigger1 = prevstateno != 3001
+trigger1 = prevstateno != 3050
+trigger1 = prevstateno != 3051
+time = 5
+add = 100,100,0
+
+[State 7070, Effect]
+type = null;PalFX
+triggerall = var(13) = 1
+trigger1 = time = 0
+time = 5
+add = 250,0,0
+
+[State 7070, Effect]
+type = Explod
+trigger1 = time = 0
+anim = 6113
+scale = .5,.5
+postype = p1
+pos = 2,-45
+sprpriority = 3
+ownpal = 1
+palfx.time = -1
+palfx.mul = 255,255,50
+removeongethit = 1
+pausemovetime = 99999
+supermovetime = 99999
+ignorehitpause = 1
+persistent = 0
+bindtime = 1
+
+[State 7070]
+type = PosSet
+trigger1 = Time = 1
+y = 0
+ 
+[State 7070, ChangeAnim]
+type = ChangeAnim
+trigger1 = pos y < 0
+value = 0
+ignorehitpause = 1
+
+[State 7070, ChangeAnim]
+type = Changestate
+trigger1 = command = "holdfwd"
+trigger1 = command != "holdup"
+trigger1 = command != "holddown"
+value = 100
+ignorehitpause = 1
+
+[State 7070, ChangeAnim]
+type = Changestate
+trigger1 = command = "holdback"
+trigger1 = command != "holdup"
+trigger1 = command != "holddown"
+value = 105
+ignorehitpause = 1
+
+[State 7070, DestroySelf]
+type = ChangeState
+trigger1 = time >2
+value = 0
+ctrl = 1
+ignorehitpause = 1
+
+;---------------------------------------------------------------------------
+;Cancel air
+[Statedef 8081]
+type    = A
+physics = N  
+ctrl = 0
+
+[State 6060, Effect]
+type = Explod
+trigger1 = stateno = [6060,6061]
+trigger1 = time = 0
+anim = 6113
+scale = .5,.5
+postype = p1
+pos = 2,-45
+sprpriority = 3
+ownpal = 1
+palfx.time = -1
+palfx.mul = 255,25,0
+removeongethit = 1
+pausemovetime = 99999
+supermovetime = 99999
+ignorehitpause = 1
+persistent = 0
+bindtime = 1
+
+[State 7071, VelAdd]
+type = VelAdd
+trigger1 = time = 0
+x = cond(enemynear, statetype != A, -25, -12.5)
+redirectID = enemynear, ID
+ 
+[State 7071, PosSet]
+type = null;PosSet
+trigger1 = !time  
+y = 0
+ignorehitpause = 1
+
+[State 7071]
+type = poweradd
+;triggerall = var(13) = 0
+trigger1 = !time
+value = -1000
+ 
+[State 7071]
+type = VelSet
+trigger1 = !time
+x = 0
+y = 0
+ignorehitpause = 1
+
+[State 230, 1]
+type = stopSnd
+trigger1 = Time = 0
+channel = 2
+ 
+[State 7071, Cancel SFX]
+type = PlaySnd
+trigger1 = !time
+value = 6060, 0
+
+[State 1200, 6]
+type = removeexplod
+trigger1 = time= 0
+id = 6621
+
+[State 7071, Effect]
+type = PalFX
+trigger1 = time = 0
+;triggerall = var(13) = 0
+time = 5
+add = 100,100,0
+
+[State 7071, Effect]
+type = Explod
+trigger1 = time = 0
+anim = 6113
+scale = .5,.5
+postype = p1
+pos = 2,-45
+sprpriority = 3
+ownpal = 1
+palfx.time = -1
+palfx.mul = 255,255,50
+removeongethit = 1
+pausemovetime = 99999
+supermovetime = 99999
+ignorehitpause = 1
+persistent = 0
+bindtime = 1
+ 
+[State 6061, ChangeAnim]
+type = ChangeAnim
+trigger1 = Time = 1
+value = 41
+ignorehitpause = 1
+
+[State 6061, ChangeAnim]
+type = Changestate
+trigger1 = command = "holdfwd"
+trigger1 = command != "holdup"
+trigger1 = command != "holddown"
+value = 102
+ignorehitpause = 1
+
+[State 6061, ChangeAnim]
+type = Changestate
+trigger1 = command = "holdback"
+trigger1 = command != "holdup"
+trigger1 = command != "holddown"
+value = 103
+ignorehitpause = 1
+
+[State 6061, ChangeAnim]
+type = Changestate
+trigger1 = command = "holddown"
+value = 53
+ignorehitpause = 1
+
+[State 6061, DestroySelf]
+type = ChangeState
+trigger1 = time >2
+value = 51
+ignorehitpause = 1
+
+;---------------------------------------------------------------------------
+;Cancel Stand
+[Statedef 9090]
+type    = S
+physics = N  
+ctrl = 0
+
+[State 6060, Effect]
+type = Explod
+trigger1 = stateno = [6060,6061]
+trigger1 = time = 0
+anim = 6113
+scale = .5,.5
+postype = p1
+pos = 2,-45
+sprpriority = 3
+ownpal = 1
+palfx.time = -1
+palfx.mul = 255,25,0
+removeongethit = 1
+pausemovetime = 99999
+supermovetime = 99999
+ignorehitpause = 1
+persistent = 0
+bindtime = 1
+ 
+[State 7070, PosSet]
+type = PosSet
+trigger1 = !time  
+y = 0
+ignorehitpause = 1
+
+[State 7070]
+type = poweradd
+;triggerall = var(13) = 0
+trigger1 = !time
+trigger1 = prevstateno != 3000
+trigger1 = prevstateno != 3001
+trigger1 = prevstateno != 3050
+trigger1 = prevstateno != 3051
+value = -1000
+ 
+[State 7070]
+type = VelSet
+trigger1 = !time
+x = 0
+y = 0
+ignorehitpause = 1
+
+[State 230, 1]
+type = stopSnd
+trigger1 = Time = 0
+channel = 2
+
+[State 7070, Cancel SFX]
+type = PlaySnd
+trigger1 = !time
+value = 6060, 0
+
+[State 1200, 6]
+type = removeexplod
+trigger1 = time= 0
+id = 6621
+
+[State 7070, Effect]
+type = PalFX
+;triggerall = var(13) = 0
+trigger1 = time = 0
+trigger1 = prevstateno != 3000
+trigger1 = prevstateno != 3001
+trigger1 = prevstateno != 3050
+trigger1 = prevstateno != 3051
+time = 5
+add = 100,0,100
+
+[State 7070, Effect]
+type = null;PalFX
+triggerall = var(13) = 1
+trigger1 = time = 0
+time = 5
+add = 250,0,0
+
+[State 7070, Effect]
+type = Explod
+trigger1 = time = 0
+anim = 6113
+scale = .5,.5
+postype = p1
+pos = 2,-45
+sprpriority = 3
+ownpal = 1
+palfx.time = -1
+palfx.mul = 255,50,255
+removeongethit = 1
+pausemovetime = 99999
+supermovetime = 99999
+ignorehitpause = 1
+persistent = 0
+bindtime = 1
+
+[State 7070]
+type = PosSet
+trigger1 = Time = 1
+y = 0
+ 
+[State 7070, ChangeAnim]
+type = ChangeAnim
+trigger1 = pos y < 0
+value = 0
+ignorehitpause = 1
+
+[State 7070, ChangeAnim]
+type = Changestate
+trigger1 = command = "holdfwd"
+trigger1 = command != "holdup"
+trigger1 = command != "holddown"
+value = 100
+ignorehitpause = 1
+
+[State 7070, ChangeAnim]
+type = Changestate
+trigger1 = command = "holdback"
+trigger1 = command != "holdup"
+trigger1 = command != "holddown"
+value = 105
+ignorehitpause = 1
+
+[State 7070, DestroySelf]
+type = ChangeState
+trigger1 = time >2
+value = 0
+ctrl = 1
+ignorehitpause = 1
+
+;---------------------------------------------------------------------------
+;Cancel air
+[Statedef 9091]
+type    = A
+physics = N  
+ctrl = 0
+
+[State 6060, Effect]
+type = Explod
+trigger1 = stateno = [6060,6061]
+trigger1 = time = 0
+anim = 6113
+scale = .5,.5
+postype = p1
+pos = 2,-45
+sprpriority = 3
+ownpal = 1
+palfx.time = -1
+palfx.mul = 255,25,0
+removeongethit = 1
+pausemovetime = 99999
+supermovetime = 99999
+ignorehitpause = 1
+persistent = 0
+bindtime = 1
+ 
+[State 7071, PosSet]
+type = null;PosSet
+trigger1 = !time  
+y = 0
+ignorehitpause = 1
+
+[State 7071]
+type = poweradd
+;triggerall = var(13) = 0
+trigger1 = !time
+value = -1000
+ 
+[State 7071]
+type = VelSet
+trigger1 = !time
+x = 0
+y = 0
+ignorehitpause = 1
+
+[State 230, 1]
+type = stopSnd
+trigger1 = Time = 0
+channel = 2
+ 
+[State 7071, Cancel SFX]
+type = PlaySnd
+trigger1 = !time
+value = 6060, 0
+
+[State 1200, 6]
+type = removeexplod
+trigger1 = time= 0
+id = 6621
+
+[State 7071, Effect]
+type = PalFX
+trigger1 = time = 0
+;triggerall = var(13) = 0
+time = 5
+add = 100,0,100
+
+[State 7071, Effect]
+type = Explod
+trigger1 = time = 0
+anim = 6113
+scale = .5,.5
+postype = p1
+pos = 2,-45
+sprpriority = 3
+ownpal = 1
+palfx.time = -1
+palfx.mul = 255,50,255
+removeongethit = 1
+pausemovetime = 99999
+supermovetime = 99999
+ignorehitpause = 1
+persistent = 0
+bindtime = 1
+ 
+[State 6061, ChangeAnim]
+type = ChangeAnim
+trigger1 = Time = 1
+value = 41
+ignorehitpause = 1
+
+[State 6061, ChangeAnim]
+type = Changestate
+trigger1 = command = "holdfwd"
+trigger1 = command != "holdup"
+trigger1 = command != "holddown"
+value = 102
+ignorehitpause = 1
+
+[State 6061, ChangeAnim]
+type = Changestate
+trigger1 = command = "holdback"
+trigger1 = command != "holdup"
+trigger1 = command != "holddown"
+value = 103
+ignorehitpause = 1
+
+[State 6061, ChangeAnim]
+type = Changestate
+trigger1 = command = "holddown"
+value = 53
+ignorehitpause = 1
+
+[State 6061, DestroySelf]
+type = ChangeState
+trigger1 = time >2
+value = 51
+ignorehitpause = 1
