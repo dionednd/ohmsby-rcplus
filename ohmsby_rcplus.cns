@@ -243,7 +243,7 @@ value = s8005, 0
 
 [State 8000, NotHitBy]
 type = NotHitBy
-trigger1 = 1
+trigger1 = AnimElem < 2
 value = SCA
 
 [State 8000, HitDef]
@@ -435,7 +435,7 @@ value = s8005, 0
 
 [State 8000, NotHitBy]
 type = NotHitBy
-trigger1 = 1
+trigger1 = AnimElem < 2
 value = SCA
 
 [State 8000, HitDef]
