@@ -165,13 +165,30 @@ trigger4 = p2movetype = A
 
 ; Slow Mo Code
 
+[State +1, MapSet]
+type = MapSet
+trigger1 = !isHelper
+trigger1 = map(dndRomanCancel_slowf) > 0
+trigger1 = gethitvar(frame) && player(gethitvar(playerno)), stateno != 7070
+map = "dndRomanCancel_slowf"
+value = 0
+ignorehitpause = 1
+
+[State +1, MapSet]
+type = MapSet
+trigger1 = !isHelper
+trigger1 = map(dndRomanCancel_slowf) = 0
+trigger1 = map(dndRomanCancel_owner) != 0 
+map = "dndRomanCancel_owner"
+value = 0
+ignorehitpause = 1
+
 [State 7070, PalFX]
 type = PalFX
 trigger1 = !isHelper
 trigger1 = map(dndRomanCancel_slowf) > 0
 add = 25,25,100
 time = 1
-redirectID = enemynear,ID
 ignorehitpause = 1
 
 [State +1, Pause]
@@ -180,9 +197,10 @@ trigger1 = !isHelper
 trigger1 = map(dndRomanCancel_slowf) > 0
 trigger1 = gametime%2 = 0
 time = 1
-movetime = cond(enemynear, map(dndRomanCancel_slowf) > 0, 0,1)
+movetime = cond(map(dndRomanCancel_slowf) > 0, 1,0)
 pausebg = 0
 endcmdbuftime = 1
+redirectID = player(map(dndRomanCancel_owner)), ID
 
 [State +1, MapSet]
 type = MapAdd
@@ -191,6 +209,21 @@ trigger1 = map(dndRomanCancel_slowf) > 0
 trigger1 = gametime%2 = 0
 map = "dndRomanCancel_slowf"
 value = -1
+ignorehitpause = 1
+
+[State +1, ModifyPlayer]
+type = ModifyPlayer
+triggerall = cond(isHelper, root,map(dndRomanCancel_slowf) = 0, map(dndRomanCancel_slowf))
+triggerall = gametime%2 = 0
+trigger1 = player(1), map(dndRomanCancel_slowf) > 0
+trigger2 = player(2), map(dndRomanCancel_slowf) > 0
+trigger3 = player(3), map(dndRomanCancel_slowf) > 0
+trigger4 = player(4), map(dndRomanCancel_slowf) > 0
+trigger5 = player(5), map(dndRomanCancel_slowf) > 0
+trigger6 = player(6), map(dndRomanCancel_slowf) > 0
+trigger7 = player(7), map(dndRomanCancel_slowf) > 0
+trigger8 = player(8), map(dndRomanCancel_slowf) > 0
+pausemovetime = 1
 ignorehitpause = 1
 
 [State +1, Effect]
@@ -206,7 +239,7 @@ type = Explod
 triggerall = authorname = "OHMSBY" || authorname = "Ichida" || authorname = "Vinnie" || authorname = "Resentone" || authorname = "TornilloOxidado" || authorname = "HakiKing" || authorname = "ZolidSone" || authorname = "JOHMSBY" || authorname = "dionednd" || authorname = "Rouuuu" || authorname = "OWO" || authorname = "RagingRowen"
 trigger1 = stateno = [6060,6061]
 trigger1 = time = 1
-anim = 6113
+anim = cond(name = "Dead Apostle Noel", 6133, 6113)
 scale = .5,.5
 postype = p1
 pos = 2,-45
@@ -232,6 +265,16 @@ ctrl = 0
 sprpriority = 2
 
 [State 8000,]
+type = VelMul
+trigger1 = 1
+y = 0.9
+
+[State 8000,]
+type = PosSet
+trigger1 = pos y > 0
+y = 0
+
+[State 8000,]
 type = Turn
 trigger1 = p2dist x < 0
 trigger1 = !time
@@ -248,7 +291,7 @@ value = SCA
 
 [State 8000, HitDef]
 type = HitDef
-ID = 8000
+ID = 8001
 trigger1 = AnimElem = 2
 attr = S, HA
 damage = 0
@@ -285,7 +328,7 @@ air.cornerpush.veloff = -35
 [State 6060, Effect]
 type = Explod
 trigger1 = AnimElem = 2
-anim = 6113
+anim = cond(name = "Dead Apostle Noel", 6133, 6113)
 scale = 1,1
 postype = p1
 pos = 2,-45
@@ -299,11 +342,22 @@ persistent = 0
 bindtime = 1
 
 [State 7070, MapSet]
+type = MapSet
+trigger1 = MoveContact
+map = "dndRomanCancel_owner"
+value = playerno
+persistent = 0
+ignorehitpause = 1
+redirectID = player(movehitvar(playerno)), ID
+
+[State 7070, MapSet]
 type = MapAdd
 trigger1 = MoveContact
 map = "dndRomanCancel_slowf"
-value = 30
+value = 120
 persistent = 0
+ignorehitpause = 1
+redirectID = player(movehitvar(playerno)), ID
 
 [State 7070]
 type = poweradd
@@ -344,7 +398,7 @@ add = 0,0,100
 [State 7070, Effect]
 type = Explod
 trigger1 = AnimElem = 2
-anim = 6113
+anim = cond(name = "Dead Apostle Noel", 6133, 6113)
 scale = .5,.5
 postype = p1
 pos = 2,-45
@@ -424,6 +478,16 @@ ctrl = 0
 sprpriority = 2
 
 [State 8000,]
+type = VelMul
+trigger1 = 1
+y = 0.9
+
+[State 8000,]
+type = PosSet
+trigger1 = pos y > 0
+y = 0
+
+[State 8000,]
 type = Turn
 trigger1 = p2dist x < 0
 trigger1 = !time
@@ -477,7 +541,7 @@ air.cornerpush.veloff = -35
 [State 6060, Effect]
 type = Explod
 trigger1 = AnimElem = 2
-anim = 6113
+anim = cond(name = "Dead Apostle Noel", 6133, 6113)
 scale = .5,.5
 postype = p1
 pos = 2,-45
@@ -531,7 +595,7 @@ add = 100,100,0
 [State 7070, Effect]
 type = Explod
 trigger1 = AnimElem = 2
-anim = 6113
+anim = cond(name = "Dead Apostle Noel", 6133, 6113)
 scale = .5,.5
 postype = p1
 pos = 2,-45
@@ -597,7 +661,7 @@ ctrl = 0
 type = Explod
 trigger1 = stateno = [6060,6061]
 trigger1 = time = 0
-anim = 6113
+anim = cond(name = "Dead Apostle Noel", 6133, 6113)
 scale = .5,.5
 postype = p1
 pos = 2,-45
@@ -671,7 +735,7 @@ add = 250,0,0
 [State 7070, Effect]
 type = Explod
 trigger1 = time = 0
-anim = 6113
+anim = cond(name = "Dead Apostle Noel", 6133, 6113)
 scale = .5,.5
 postype = p1
 pos = 2,-45
@@ -731,7 +795,7 @@ ctrl = 0
 type = Explod
 trigger1 = stateno = [6060,6061]
 trigger1 = time = 0
-anim = 6113
+anim = cond(name = "Dead Apostle Noel", 6133, 6113)
 scale = .5,.5
 postype = p1
 pos = 2,-45
@@ -790,7 +854,7 @@ add = 100,0,100
 [State 7071, Effect]
 type = Explod
 trigger1 = time = 0
-anim = 6113
+anim = cond(name = "Dead Apostle Noel", 6133, 6113)
 scale = .5,.5
 postype = p1
 pos = 2,-45
