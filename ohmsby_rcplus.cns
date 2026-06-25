@@ -1,4 +1,4 @@
-; Roman Cancel Plus+ for OHMSBY Style Characters by dionednd v0.0.3b
+; Roman Cancel Plus+ for OHMSBY Style Characters by dionednd v0.0.3c
 ; Adds Blue, Yellow, Purple Roman Cancels to OHMSBY Style Characters
 ; normal Roman Cancel & Force Roman Cancel turns into Red Roman Cancel
 ; Blue is usable during neutral or idle states. slows nearby enemies down by 50% for 60 frames, duration stacks up with active BRCs.
@@ -45,13 +45,14 @@ triggerall = !AIlevel
 triggerall = movetype = I || movetype = A
 triggerall = statetype != A
 triggerall = !ctrl
-triggerall = stateno != [800,899] && enemynear, stateno != [800,899]
+triggerall = stateno != [800,899]
 triggerall = stateno != [8000,8050]
 triggerall= stateno != [3900,3999]
 triggerall= stateno != [4000,4999]
 triggerall = power >= 1000
 triggerall = command = "x"
 triggerall = !movecontact
+triggerall = enemynear,gethitvar(isbound) = 0
 trigger1 = animElemVar(numClsn1) = 0
 
 [State -1, Air Purple Roman Cancel]
@@ -64,13 +65,14 @@ triggerall = !AIlevel
 triggerall = prevmovetype = A
 triggerall = statetype = A
 triggerall = !ctrl
-triggerall = stateno != [800,899]
+triggerall = stateno != [800,899] 
 triggerall = stateno != [8000,8050]
 triggerall= stateno != [3900,3999]
 triggerall= stateno != [4000,4999]
 triggerall = power >= 1000
 triggerall = command = "x"
 triggerall = !movecontact
+triggerall = enemynear,gethitvar(isbound) = 0
 trigger1 = animElemVar(numClsn1) = 0
 
 ;===========================================================================
@@ -122,6 +124,7 @@ triggerall= stateno != [4000,4999]
 triggerall = power >= 1000
 triggerall = !movecontact
 triggerall = animElemVar(numClsn1) = 0
+triggerall = enemynear,gethitvar(isbound) = 0
 trigger1 = stateno = 620
 trigger1 = enemynear,stateno = [120,159]
 trigger1 = numhelper(7777) > 0 ; If Helper exist.
@@ -150,6 +153,7 @@ triggerall= stateno != [4000,4999]
 triggerall = power >= 1000
 triggerall = !movecontact
 triggerall = animElemVar(numClsn1) = 0
+triggerall = enemynear,gethitvar(isbound) = 0
 trigger1 = stateno = 620
 trigger1 = enemynear,stateno = [120,159]
 trigger1 = numhelper(7777) > 0 ; If Helper exist.
