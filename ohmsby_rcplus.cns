@@ -1,4 +1,4 @@
-; Roman Cancel Plus+ for OHMSBY Style Characters by dionednd v0.0.3
+; Roman Cancel Plus+ for OHMSBY Style Characters by dionednd v0.0.3a
 ; Adds Blue, Yellow, Purple Roman Cancels to OHMSBY Style Characters
 ; normal Roman Cancel & Force Roman Cancel turns into Red Roman Cancel
 ; Blue is usable during neutral or idle states. slows nearby enemies down by 50% for 60 frames, duration stacks up with active BRCs.
@@ -45,7 +45,7 @@ triggerall = !AIlevel
 triggerall = movetype = I || movetype = A
 triggerall = statetype != A
 triggerall = !ctrl
-triggerall = stateno != [800,899]
+triggerall = stateno != [800,899] && enemynear, stateno != [800,899]
 triggerall = stateno != [8000,8050]
 triggerall= stateno != [3900,3999]
 triggerall= stateno != [4000,4999]
