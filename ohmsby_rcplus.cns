@@ -1,4 +1,4 @@
-; Roman Cancel Plus+ for OHMSBY Style Characters by dionednd v0.0.3a
+; Roman Cancel Plus+ for OHMSBY Style Characters by dionednd v0.0.3b
 ; Adds Blue, Yellow, Purple Roman Cancels to OHMSBY Style Characters
 ; normal Roman Cancel & Force Roman Cancel turns into Red Roman Cancel
 ; Blue is usable during neutral or idle states. slows nearby enemies down by 50% for 60 frames, duration stacks up with active BRCs.
@@ -542,13 +542,11 @@ air.cornerpush.veloff = -35
 type = Explod
 trigger1 = AnimElem = 2
 anim = cond(name = "Dead Apostle Noel", 6133, 6113)
-scale = .5,.5
+scale = 1,1
 postype = p1
 pos = 2,-45
 sprpriority = 3
 ownpal = 1
-palfx.time = -1
-palfx.mul = 255,25,0
 removeongethit = 1
 pausemovetime = 99999
 supermovetime = 99999
@@ -659,16 +657,13 @@ ctrl = 0
 
 [State 6060, Effect]
 type = Explod
-trigger1 = stateno = [6060,6061]
 trigger1 = time = 0
 anim = cond(name = "Dead Apostle Noel", 6133, 6113)
-scale = .5,.5
+scale = 1,1
 postype = p1
 pos = 2,-45
 sprpriority = 3
 ownpal = 1
-palfx.time = -1
-palfx.mul = 255,25,0
 removeongethit = 1
 pausemovetime = 99999
 supermovetime = 99999
